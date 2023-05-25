@@ -1,20 +1,60 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block body %}
 
-{% block body %}
-
-    <div class="sections-container">
-        <h1>Clipper</h1>
-        <button id="create-section">Create</button>
-        <div class="default-clipboard">
-            <div class="header">
-                <h1>Default</h1>
-                <button class="add-clipboard" data-section="1">+</button>
-            </div>
-            <div class="body">
-
-            </div>
-        </div>
+<div class="sections-container">
+  <div class="top-header">
+    <div>
+      <h1>Clipper</h1>
     </div>
-    {% load static %}
-    <script src="{% static 'scripts/add.js' %}"></script>
+    <input type="search" name="" id="" placeholder="Search" />
+    <div>
+      <button>Add</button>
+    </div>
+    <div></div>
+  </div>
+  <div class="default-clipboard clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="clipboard-section clipboard">
+    <div class="header">
+      <h4>Defaultwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="clipboard-section clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="default-clipboard clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="default-clipboard clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="default-clipboard clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+  <div class="default-clipboard clipboard">
+    <div class="header">
+      <h4>Default</h4>
+    </div>
+    <div class="body"></div>
+  </div>
+</div>
+
+{% load static %}
+<script src="{% static 'scripts/add.js' %}"></script>
 {% endblock %}
