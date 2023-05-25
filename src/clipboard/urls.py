@@ -20,5 +20,5 @@ from .views import *
 urlpatterns = [
     path("", IndexView.as_view(), name="index"),
     path("create/", CreateSection.as_view(), name="create_section"),
-    path("<str:section>/add", AddToSection.as_view(), name="add_to_section")
+    path("<str:section>/add/", AddToSection.as_view(), name="add_to_section")
 ]

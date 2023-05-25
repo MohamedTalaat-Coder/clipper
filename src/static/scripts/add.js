@@ -1,9 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const add_button = document.getElementById("add-clipboard");
-  add_button.addEventListener("click", () => {
-    const url = `create/`;
-    fetch_data(url, "POST",{"helo":"hello"})
-  });
+  const add_button = document.querySelectorAll(".add-clipboard");
+  const create_button = document.getElementById("create-section");
+  create_button.addEventListener("click", () => {
+    const url = "create/";
+    fetch_data(url, "POST", {"section":"section"})
+  })
+  add_button.forEach(button => {
+    button.addEventListener("click", () => {
+      const url = `${button.dataset.section}/add/`
+      fetch_data(url, "POST", {"button":"id"})
+    })
+  })
 });
 
 function fetch_data(url, method, data) {
