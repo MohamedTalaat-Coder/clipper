@@ -7,12 +7,13 @@
         <div class="default-clipboard">
             <div class="header">
                 <h1>Default</h1>
-                <button>+</button>
+                <button id="add-clipboard" data-section="1">+</button>
             </div>
             <div class="body">
-                
+
             </div>
         </div>
     </div>
-
+    {% load static %}
+    <script src="{% static 'scripts/add.js' %}"></script>
 {% endblock %}

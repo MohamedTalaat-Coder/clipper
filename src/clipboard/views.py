@@ -11,3 +11,13 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Clipboard.objects.all()
+
+
+class CreateSection(CreateView):
+    def post(self, request, *args, **kwargs):
+        print("create section")
+
+
+class AddToSection(CreateView):
+    def post(self, request, *args, **kwargs):
+        print("add to section")
