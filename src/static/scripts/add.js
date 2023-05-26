@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
   add_button.forEach((button) => {
     button.addEventListener("click", () => {
       const url = `${button.dataset.section}/add/`;
+  
         });
     });
   });
@@ -58,4 +59,17 @@ function append_new_section(section) {
     </div>
   `;
   parent.appendChild(container);
+}
+
+function remove_current_clipboar() {
+  document.getElementById("section-clipboard").remove();
+}
+
+function add_clipboard_section() {
+  const container = document.createElement("div");
+  container.innerHTML = `
+  
+
+
+  `
 }

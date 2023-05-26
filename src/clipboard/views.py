@@ -15,7 +15,7 @@ class IndexView(ListView):
         return Section.objects.all()
 
 
-class SectionCliboard(ListView):
+class SectionClipboard(ListView):
     model = Clipboard
     template_name = "clipboard/index.html"
     context_object_name = "clipboards"

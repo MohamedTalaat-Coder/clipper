@@ -87,3 +87,53 @@ body {
   margin-bottom: 20px;
   border-radius: 10px;
 }
+
+
+.section-clipboard {
+  margin-left: 300px;
+}
+
+.clipboar-container {
+  box-shadow: 0px 0px 10px #888888;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  
+}
+
+.clipboar-container .header {
+  background-color: var(--blue-color);
+  padding: 5px;
+  font-size: 25px;
+  color: var(--body-color);
+  text-align: center;
+  border-radius: 10px;
+
+}
+
+.clipboar-container .body {
+  padding: 10px;
+
+}
+
+.add-current-clipboard-container {
+  width: 100%;
+  text-align: center;
+}
+
+.add-current-clipboard {
+  background-color: var(--blue-color);
+  border-radius: 10px;
+  color: var(--body-color);
+  padding: 10px;
+  width: 400px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.add-current-clipboard:hover {
+  background-color: var(--crimson);
+  transition: .3s;
+}
