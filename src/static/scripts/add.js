@@ -2,19 +2,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const add_button = document.querySelectorAll(".add-clipboard");
   const create_button = document.getElementById("create-section");
   create_button.addEventListener("click", () => {
-    let section = prompt("")
+    let section = prompt("");
     if (section !== null) {
-    const url = "create/";
-    fetch_data(url, "POST", {"section":section})
+      const url = "create/";
+      fetch_data(url, "POST", { section: section }).then(response => response.json()).then(data => {
+        if (data.success){
+          append_new_section(section);
+        }
+      })
     }
-  })
-  add_button.forEach(button => {
+  });
+  add_button.forEach((button) => {
     button.addEventListener("click", () => {
-      const url = `${button.dataset.section}/add/`
-      fetch_data(url, "POST", {"key":"key", "value":"value"})
-    })
-  })
-});
+      const url = `${button.dataset.section}/add/`;
+        });
+    });
+  });
 
 function fetch_data(url, method, data) {
   formdata = new FormData();
@@ -43,4 +46,16 @@ function getCookie(name) {
     }
   }
   return cookieValue;
+}
+
+function append_new_section(section) {
+  const parent = document.getElementById("sections-container");
+  const container = document.createElement("div");
+  container.classList.add("created-clipboard", "clipboard")
+  container.innerHTML = `
+  <div class="header">
+      <button data-section="${section}">${section}</button>
+    </div>
+  `;
+  parent.appendChild(container);
 }

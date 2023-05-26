@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView
 from .models import Clipboard, Section
+from django.http import JsonResponse
 
 
 # Create your views here.
@@ -28,6 +29,10 @@ class CreateSection(CreateView):
     model = Section
     success_url = "/"
     fields = ['section']
+    def post(self, request, *args, **kwargs):
+        section = request.POST.get("section")
+        self.model.objects.create(section=section)
+        return JsonResponse({"success":True, "section":section})
 
 
 class AddToSection(CreateView):

@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block body %}
 
-<div class="sections-container">
+<div class="sections-container" id="sections-container">
   <div class="top-header">
     <div>
       <h1>Clipper</h1>
@@ -15,14 +15,12 @@
     <div class="header">
       <button>Clipboard</button>
     </div>
-    <div class="body"></div>
   </div>
   {% for clipboard in clipboards %}
   <div class="created-clipboard clipboard">
     <div class="header">
-      <button>{{clipboard.section}}</button>
+      <button data-section="{{clipboard.section}}">{{clipboard.section}}</button>
     </div>
-    <div class="body"></div>
   </div>
   {% endfor %}
 </div>
