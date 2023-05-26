@@ -2,13 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
   const add_button = document.querySelectorAll(".add-clipboard");
   const create_button = document.getElementById("create-section");
   create_button.addEventListener("click", () => {
+    let section = prompt("")
+    if (section !== null) {
     const url = "create/";
-    fetch_data(url, "POST", {"section":"section"})
+    fetch_data(url, "POST", {"section":section})
+    }
   })
   add_button.forEach(button => {
     button.addEventListener("click", () => {
       const url = `${button.dataset.section}/add/`
-      fetch_data(url, "POST", {"button":"id"})
+      fetch_data(url, "POST", {"key":"key", "value":"value"})
     })
   })
 });

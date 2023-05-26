@@ -7,52 +7,24 @@
     </div>
     <input type="search" name="" id="" placeholder="Search" />
     <div>
-      <button>Add</button>
+      <button id="create-section">Add</button>
     </div>
     <div></div>
   </div>
   <div class="default-clipboard clipboard">
     <div class="header">
-      <h4>Default</h4>
+      <button>Clipboard</button>
     </div>
     <div class="body"></div>
   </div>
-  <div class="clipboard-section clipboard">
+  {% for clipboard in clipboards %}
+  <div class="created-clipboard clipboard">
     <div class="header">
-      <h4>Defaultwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww</h4>
+      <button>{{clipboard.section}}</button>
     </div>
     <div class="body"></div>
   </div>
-  <div class="clipboard-section clipboard">
-    <div class="header">
-      <h4>Default</h4>
-    </div>
-    <div class="body"></div>
-  </div>
-  <div class="default-clipboard clipboard">
-    <div class="header">
-      <h4>Default</h4>
-    </div>
-    <div class="body"></div>
-  </div>
-  <div class="default-clipboard clipboard">
-    <div class="header">
-      <h4>Default</h4>
-    </div>
-    <div class="body"></div>
-  </div>
-  <div class="default-clipboard clipboard">
-    <div class="header">
-      <h4>Default</h4>
-    </div>
-    <div class="body"></div>
-  </div>
-  <div class="default-clipboard clipboard">
-    <div class="header">
-      <h4>Default</h4>
-    </div>
-    <div class="body"></div>
-  </div>
+  {% endfor %}
 </div>
 
 {% load static %}

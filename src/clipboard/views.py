@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DeleteView
-from .models import Clipboard
+from .models import Clipboard, Section
 
 
 # Create your views here.
@@ -8,16 +8,28 @@ from .models import Clipboard
 class IndexView(ListView):
     template_name = "clipboard/index.html"
     model = Clipboard
+    context_object_name = "clipboards"
 
     def get_queryset(self):
-        return Clipboard.objects.all()
+        return Section.objects.all()
+
+
+class SectionCliboard(ListView):
+    model = Clipboard
+    template_name = "clipboard/index.html"
+    context_object_name = "clipboards"
+
+    def get_queryset(self):
+        section = self.kwargs['section']
+        print("section -->", section)
 
 
 class CreateSection(CreateView):
-    def post(self, request, *args, **kwargs):
-        print("create section")
+    model = Section
+    success_url = "/"
+    fields = ['section']
 
 
 class AddToSection(CreateView):
-    def post(self, request, *args, **kwargs):
-        print("add to section")
+    model = Clipboard
+    fields = ['key', 'value', 'section_id']
