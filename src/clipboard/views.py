@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, DeleteView
 from .models import Clipboard, Section
 from django.http import JsonResponse
 import json
+from django.core.cache import cache
 
 
 # Create your views here.
@@ -13,21 +14,35 @@ class IndexView(ListView):
     context_object_name = "sections"
 
     def get_queryset(self):
-        return Section.objects.all()
+        queryset = cache.get("sections_list", None)
+        if queryset is None:
+            queryset = Section.objects.all()
+            cache.set("sections_list", queryset)
+        return queryset
 
 
 class SectionClipboard(ListView):
     model = Clipboard
     template_name = "clipboard/index.html"
-    context_object_name = "sections"
+    context_object_name = "clipboards"
 
     def post(self, request, *args, **kwargs):
-        clipboards = self.get_queryset()
-        return JsonResponse({"success": True, "clipboards": list(clipboards.values())})
+        queryset = self.get_queryset()
+        sections = queryset['sections']
+        clipboards = queryset['clipboards']
+        return JsonResponse({"success": True, "clipboards": list(clipboards.values()), "sections": list(
+            sections.values())})
 
     def get_queryset(self):
-        section = json.loads(self.request.body)['section']
-        return self.model.objects.filter(section=section)
+        section = self.kwargs['id']
+        sections = cache.get("sections_list", None)
+        if sections is None:
+            return redirect("/")
+        clipboards = Clipboard.objects.filter(section=section)
+        return {
+            "sections": sections,
+            "clipboards": clipboards
+        }
 
 
 class CreateSection(CreateView):

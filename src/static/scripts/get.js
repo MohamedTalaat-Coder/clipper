@@ -14,9 +14,10 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data)
+          console.log(data.success)
           if (data.success) {
             add_clipboards('1', data.clipboards)
+            history.pushState(null, null, section)
           }
         });
     });

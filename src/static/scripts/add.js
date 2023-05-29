@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   const add_button = document.querySelectorAll(".add-clipboard");
   const create_button = document.getElementById("create-section");
-
+  const add_current_clipboard_button = document.getElementById(
+    "add-clipboard-button"
+  );
   create_button.addEventListener("click", () => {
     let section = prompt("");
     if (section !== null) {
@@ -11,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((data) => {
           if (data.success) {
             append_new_section(data.section, data.section_id);
-            
           }
         });
     }
@@ -22,16 +23,28 @@ document.addEventListener("DOMContentLoaded", function () {
       const url = `${button.dataset.section}/add/`;
     });
   });
+
+  add_current_clipboard_button.addEventListener("click", () => {
+    navigator.clipboard
+      .readText()
+      .then((text) => {
+        let = clipboardData = text;
+        alert(localStorage.getItem("section"))
+      })
+      .catch((err) => {
+        console.error("Failed to read clipboard contents: ", err);
+      });
+      console.log(clipboardData)
+  });
 });
 
 const section_div = document.querySelectorAll(".created-clipboard");
 
 section_div.forEach((clipboard) => {
-  clipboard.addEventListener("click", event => {
-    get_section_clipboards(event)
-  })
-})
-
+  clipboard.addEventListener("click", (event) => {
+    get_section_clipboards(event);
+  });
+});
 
 function fetch_data(url, method, data) {
   formdata = new FormData();
@@ -87,7 +100,6 @@ function add_clipboard_section() {
 }
 
 function get_section_clipboards(event) {
-  console.log(event)
   const section = event.target.dataset.section;
   fetch(`${section}/`, {
     method: "POST",
@@ -99,9 +111,8 @@ function get_section_clipboards(event) {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       if (data.success) {
-        console.log(data.clipboards)
+        console.log(data.clipboards);
       }
     });
 }

@@ -26,7 +26,7 @@
 </div>
 <div class="section-clipboard" id="section-clipboard">
   <div class="add-current-clipboard-container">
-  <button class="add-current-clipboard">Add Current Clipboard</button>
+  <button class="add-current-clipboard" id="add-clipboard-button">Add Current Clipboard</button>
   </div>
   {% for clipboar in clipboards %}
   <div class="clipboar-container" data-clipboard="{{clipboar.key}}">
@@ -38,5 +38,5 @@
 </div>
 {% load static %}
 <script src="{% static 'scripts/add.js' %}"></script>
-<!-- <script src="{% static 'scripts/get.js' %}"></script> -->
+<script src="{% static 'scripts/get.js' %}"></script>
 {% endblock %}
