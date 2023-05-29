@@ -28,7 +28,7 @@ const section_div = document.querySelectorAll(".created-clipboard");
 
 section_div.forEach((clipboard) => {
   clipboard.addEventListener("click", event => {
-    get_section_clipboards(clipboard)
+    get_section_clipboards(event)
   })
 })
 
@@ -101,7 +101,7 @@ function get_section_clipboards(event) {
     .then((data) => {
       console.log(data);
       if (data.success) {
-        add_clipboards("1", data.clipboards);
+        console.log(data.clipboards)
       }
     });
 }
