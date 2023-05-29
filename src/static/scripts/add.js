@@ -1,24 +1,37 @@
 document.addEventListener("DOMContentLoaded", function () {
   const add_button = document.querySelectorAll(".add-clipboard");
   const create_button = document.getElementById("create-section");
+
   create_button.addEventListener("click", () => {
     let section = prompt("");
     if (section !== null) {
       const url = "create/";
-      fetch_data(url, "POST", { section: section }).then(response => response.json()).then(data => {
-        if (data.success){
-          append_new_section(section);
-        }
-      })
+      fetch_data(url, "POST", { section: section })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            append_new_section(data.section, data.section_id);
+            
+          }
+        });
     }
   });
+
   add_button.forEach((button) => {
     button.addEventListener("click", () => {
       const url = `${button.dataset.section}/add/`;
-  
-        });
     });
   });
+});
+
+const section_div = document.querySelectorAll(".created-clipboard");
+
+section_div.forEach((clipboard) => {
+  clipboard.addEventListener("click", event => {
+    get_section_clipboards(clipboard)
+  })
+})
+
 
 function fetch_data(url, method, data) {
   formdata = new FormData();
@@ -49,13 +62,14 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function append_new_section(section) {
+function append_new_section(section, id) {
   const parent = document.getElementById("sections-container");
   const container = document.createElement("div");
-  container.classList.add("created-clipboard", "clipboard")
+  container.classList.add("created-clipboard", "clipboard");
+  container.addEventListener("click", get_section_clipboards, false);
   container.innerHTML = `
   <div class="header">
-      <button data-section="${section}">${section}</button>
+      <button data-section="${id}">${section}</button>
     </div>
   `;
   parent.appendChild(container);
@@ -69,7 +83,25 @@ function add_clipboard_section() {
   const container = document.createElement("div");
   container.innerHTML = `
   
+  `;
+}
 
-
-  `
+function get_section_clipboards(event) {
+  console.log(event)
+  const section = event.target.dataset.section;
+  fetch(`${section}/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    body: JSON.stringify({ section }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.success) {
+        add_clipboards("1", data.clipboards);
+      }
+    });
 }

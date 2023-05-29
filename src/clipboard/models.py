@@ -8,4 +8,4 @@ class Section(models.Model):
 class Clipboard(models.Model):
     key = models.CharField(max_length=64)
     value = models.TextField()
-    section = models.ManyToManyField(Section)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
