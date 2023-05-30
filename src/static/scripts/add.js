@@ -32,16 +32,21 @@ document.addEventListener("DOMContentLoaded", function () {
         if (key !== null) {
         let value = text;
         let section_id = window.location.href.split("/")[3];
-        formdata = new FormData();
-        formdata.append("section",section_id);
-        formdata.append("key", key)
-        formdata.append("value", value)
         fetch(`/${section_id}/add/`, {
           method:"POST",
           headers: {
+            'content-type':'application/json',
             "X-CSRFToken": getCookie("csrftoken"),
           },
-           body: formdata,
+           body: 
+            JSON.stringify({"section":section_id, "key":key, "value":value}),
+        }).then(response => response.json()).then(data => {
+          if (data.success) {
+            append_new_clipboard(data);
+          }
+          else {
+            alert("No data in clipboard")
+          }
         });
       }
       })
@@ -99,6 +104,19 @@ function append_new_section(section, id) {
     </div>
   `;
   parent.appendChild(container);
+}
+
+function append_new_clipboard(data) {
+  const container = document.createElement("div");
+  container.classList.add("clipboard-container");
+  container.dataset.clipboard = data.id;
+  container.innerHTML = `
+  
+  <div class="header">${data.key}</div>
+  <div class="body">${data.value}</div>
+  `
+
+  document.getElementById("clipboards-container").appendChild(container);
 }
 
 function remove_current_clipboar() {

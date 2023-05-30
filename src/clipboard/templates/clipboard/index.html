@@ -30,7 +30,7 @@
   </div>
   <div id="clipboards-container">
   {% for clipboard in clipboards %}
-  <div class="clipboard-container" data-clipboard="{{clipboar.key}}">
+  <div class="clipboard-container" data-clipboard="{{clipboard.id}}">
     <div class="header">{{clipboard.key}}</div>
     <div class="body">{{clipboard.value}}</div>
   </div>
