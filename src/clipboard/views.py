@@ -37,12 +37,18 @@ class SectionClipboard(ListView):
         section = self.kwargs['id']
         sections = cache.get("sections_list", None)
         if sections is None:
-            return redirect("/")
+            sections = Section.objects.all()
         clipboards = Clipboard.objects.filter(section=section)
         return {
             "sections": sections,
             "clipboards": clipboards
         }
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        queryset = self.get_queryset()
+        context['sections'] = queryset['sections']
+        context['clipboards'] = queryset['clipboards']
+        return context
 
 
 class CreateSection(CreateView):
