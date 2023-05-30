@@ -28,12 +28,14 @@
   <div class="add-current-clipboard-container">
   <button class="add-current-clipboard" id="add-clipboard-button">Add Current Clipboard</button>
   </div>
-  {% for clipboar in clipboards %}
-  <div class="clipboar-container" data-clipboard="{{clipboar.key}}">
-    <div class="header">www</div>
-    <div class="body">xxx</div>
+  <div id="clipboards-container">
+  {% for clipboard in clipboards %}
+  <div class="clipboard-container" data-clipboard="{{clipboar.key}}">
+    <div class="header">{{clipboard.key}}</div>
+    <div class="body">{{clipboard.value}}</div>
   </div>
   {% endfor %}
+</div>
 
 </div>
 {% load static %}

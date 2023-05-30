@@ -43,6 +43,7 @@ class SectionClipboard(ListView):
             "sections": sections,
             "clipboards": clipboards
         }
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         queryset = self.get_queryset()
@@ -69,4 +70,5 @@ class CreateSection(CreateView):
 
 class AddToSection(CreateView):
     model = Clipboard
-    fields = ['key', 'value', 'section_id']
+    fields = ['key', 'value', 'section']
+

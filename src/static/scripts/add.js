@@ -28,13 +28,26 @@ document.addEventListener("DOMContentLoaded", function () {
     navigator.clipboard
       .readText()
       .then((text) => {
-        let = clipboardData = text;
-        alert(localStorage.getItem("section"))
+        let key = prompt("key:");
+        if (key !== null) {
+        let value = text;
+        let section_id = window.location.href.split("/")[3];
+        formdata = new FormData();
+        formdata.append("section",section_id);
+        formdata.append("key", key)
+        formdata.append("value", value)
+        fetch(`/${section_id}/add/`, {
+          method:"POST",
+          headers: {
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+           body: formdata,
+        });
+      }
       })
       .catch((err) => {
         console.error("Failed to read clipboard contents: ", err);
       });
-      console.log(clipboardData)
   });
 });
 
@@ -101,7 +114,7 @@ function add_clipboard_section() {
 
 function get_section_clipboards(event) {
   const section = event.target.dataset.section;
-  fetch(`${section}/`, {
+  fetch(`/${section}/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
