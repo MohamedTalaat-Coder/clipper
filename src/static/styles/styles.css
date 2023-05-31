@@ -96,6 +96,7 @@ border-radius: 10px;
 
 .section-clipboard {
   margin-left: 300px;
+  margin-right: 20px;
 }
 
 .clipboard-container {
@@ -104,6 +105,8 @@ border-radius: 10px;
   border-radius: 10px;
   /* cursor: pointer; */
   margin-top: 20px;
+  max-height: 400px;
+  overflow: auto;
   
 }
 
@@ -152,6 +155,9 @@ pre {
 .clipboard-actions {
   text-align: right;
   padding: 15px;
+  display: flex;
+  flex-direction: row-reverse;
+  
 }
 
 .clipboard-actions button {
@@ -162,4 +168,8 @@ pre {
   border: none;
   font-weight: bold;
   cursor: pointer;
+}
+
+.clipboard-actions button:first-child {
+  margin-left: 10px;
 }

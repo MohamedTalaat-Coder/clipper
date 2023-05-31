@@ -34,8 +34,8 @@
     <div class="header">{{clipboard.key}}</div>
     <pre class="body">{{clipboard.value}}</pre>
     <div class="clipboard-actions">
-    <button>Delete</button>
-    <button>Copy</button>
+    <button class="delete-button">Delete</button>
+    <button class="copy-button">Copy</button>
     </div>
   </div>
   {% endfor %}
@@ -43,6 +43,7 @@
 
 </div>
 {% load static %}
-<script src="{% static 'scripts/add.js' %}"></script>
-<script src="{% static 'scripts/get.js' %}"></script>
+<script  src="{% static 'scripts/add.js' %}"></script>
+<script  src="{% static 'scripts/get.js' %}"></script>
+<script type="module" src="{% static 'scripts/delete.js' %}"></script>
 {% endblock %}

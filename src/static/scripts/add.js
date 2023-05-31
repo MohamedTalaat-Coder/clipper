@@ -30,25 +30,29 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((text) => {
         let key = prompt("key:");
         if (key !== null) {
-        let value = text;
-        let section_id = window.location.href.split("/")[3];
-        fetch(`/${section_id}/add/`, {
-          method:"POST",
-          headers: {
-            'content-type':'application/json',
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-           body: 
-            JSON.stringify({"section":section_id, "key":key, "value":value}),
-        }).then(response => response.json()).then(data => {
-          if (data.success) {
-            append_new_clipboard(data);
-          }
-          else {
-            alert("No data in clipboard")
-          }
-        });
-      }
+          let value = text;
+          let section_id = window.location.href.split("/")[3];
+          fetch(`/${section_id}/add/`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+              "X-CSRFToken": getCookie("csrftoken"),
+            },
+            body: JSON.stringify({
+              section: section_id,
+              key: key,
+              value: value,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                append_new_clipboard(data);
+              } else {
+                alert("No data in clipboard");
+              }
+            });
+        }
       })
       .catch((err) => {
         console.error("Failed to read clipboard contents: ", err);
@@ -61,6 +65,12 @@ const section_div = document.querySelectorAll(".created-clipboard");
 section_div.forEach((clipboard) => {
   clipboard.addEventListener("click", (event) => {
     get_section_clipboards(event);
+    // let delete_buttons = document.querySelectorAll(".delete-button");
+    // delete_buttons.forEach(button => {
+    //   button.addEventListener("click", () => {
+    //     button.addEventListener(delete_clipboard(button))
+    //   })
+    // })
   });
 });
 
@@ -109,14 +119,38 @@ function append_new_section(section, id) {
 function append_new_clipboard(data) {
   const container = document.createElement("div");
   container.classList.add("clipboard-container");
+  console.log(data)
   container.dataset.clipboard = data.id;
-  container.innerHTML = `
-  
-  <div class="header">${data.key}</div>
-  <pre class="body">${data.value}</pre>
-  `
+  const header = document.createElement("div");
+  header.className = "header";
+  header.textContent = data.key;
+
+  const body = document.createElement("pre");
+  body.className = "body";
+  body.textContent = data.value;
+
+  container.appendChild(header);
+  container.appendChild(body);
 
   document.getElementById("clipboards-container").appendChild(container);
+  const actions = document.createElement("div");
+  actions.className = "clipboard-actions";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+  deleteButton.textContent = "Delete";
+  deleteButton.addEventListener("click", function() {
+    delete_clipboard(container);
+  })
+
+  const copyButton = document.createElement("button");
+  copyButton.className = "copy-button";
+  copyButton.textContent = "Copy";
+
+  actions.appendChild(deleteButton);
+  actions.appendChild(copyButton);
+
+  container.appendChild(actions);
 }
 
 function remove_current_clipboar() {
@@ -143,7 +177,26 @@ function get_section_clipboards(event) {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        console.log(data.clipboards);
+        append_new_clipboard(data);
+      }
+    });
+}
+
+
+function delete_clipboard(clipboard) {
+  const clipboard_id = clipboard.dataset.clipboard;
+  fetch(`/${clipboard_id}/delete`, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    body: JSON.stringify({ clipboard: clipboard.dataset.clipboard_id }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.success) {
+        clipboard.remove();
       }
     });
 }

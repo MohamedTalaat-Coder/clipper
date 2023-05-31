@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, CreateView, DeleteView
+from django.views.generic import ListView, CreateView, DeleteView, UpdateView
 from .models import Clipboard, Section
 from django.http import JsonResponse
 import json
@@ -76,5 +76,16 @@ class AddToSection(CreateView):
         if not data['value'] or not data['key']:
             return JsonResponse({"success":False})
         section = Section.objects.get(id=data['section'])
-        Clipboard.objects.create(section=section, key=data['key'], value=data['value'])
-        return JsonResponse({"success": True, "key": data['key'], "value": data['value']})
+        clipboard = Clipboard.objects.create(section=section, key=data['key'], value=data['value'])
+        return JsonResponse({"success": True, "key": data['key'], "value": data['value'], "id":clipboard.id})
+
+class DeleteClipboard(DeleteView):
+    model = Clipboard
+
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+        return JsonResponse({"success":True})
+
+    def get_object(self, queryset=None):
+        print("delete request recived")
+        return Clipboard.objects.get(id=self.kwargs['id'])
