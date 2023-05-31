@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   create_button.addEventListener("click", () => {
     let section = prompt("");
     if (section !== null) {
-      const url = "create/";
+      const url = "/create/";
       fetch_data(url, "POST", { section: section })
         .then((response) => response.json())
         .then((data) => {
@@ -113,7 +113,7 @@ function append_new_clipboard(data) {
   container.innerHTML = `
   
   <div class="header">${data.key}</div>
-  <div class="body">${data.value}</div>
+  <pre class="body">${data.value}</pre>
   `
 
   document.getElementById("clipboards-container").appendChild(container);

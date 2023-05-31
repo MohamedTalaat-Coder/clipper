@@ -32,7 +32,11 @@
   {% for clipboard in clipboards %}
   <div class="clipboard-container" data-clipboard="{{clipboard.id}}">
     <div class="header">{{clipboard.key}}</div>
-    <div class="body">{{clipboard.value}}</div>
+    <pre class="body">{{clipboard.value}}</pre>
+    <div class="clipboard-actions">
+    <button>Delete</button>
+    <button>Copy</button>
+    </div>
   </div>
   {% endfor %}
 </div>

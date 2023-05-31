@@ -23,11 +23,17 @@ document.addEventListener("DOMContentLoaded", function () {
             if (clipboards_container) {
               clipboards_container.remove();
             }
+            let clipboards = document.querySelectorAll(".created-clipboard");
+            clipboards.forEach(clip_div => {
+              clip_div.classList.remove("selected")
+            })
+            clipboard.classList.add("selected")
           }
         });
     });
   });
 });
+
 
 function getCookie(name) {
   let cookieValue = null;
@@ -53,7 +59,7 @@ function add_clipboards(parent, clipboards) {
     let header = document.createElement("div");
     header.classList.add("header");
     header.textContent = clipboards[i].key;
-    let body = document.createElement("div");
+    let body = document.createElement("pre");
     body.classList.add("body");
     body.textContent = clipboards[i].value;
     clipboard_container.appendChild(header);
