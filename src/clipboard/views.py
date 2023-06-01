@@ -91,6 +91,7 @@ class DeleteClipboard(DeleteView):
         return JsonResponse({"success":True})
 
     def get_object(self, queryset=None):
+        print("-->", self.kwargs['clipboard'])
         return Clipboard.objects.get(id=self.kwargs['clipboard'])
 
 class DeleteSection(DeleteView):
@@ -102,6 +103,7 @@ class DeleteSection(DeleteView):
         return Section.objects.get(id=section_id)
 
     def delete(self, request, *args, **kwargs):
+
         self.get_object().delete()
         return JsonResponse({"success": True})
 

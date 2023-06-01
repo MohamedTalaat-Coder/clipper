@@ -104,7 +104,6 @@ function getCookie(name) {
 }
 
 function append_new_section(section, id) {
-  console.log(section, id)
   const parent = document.getElementById("sections-container");
   const container = document.createElement("div");
   container.classList.add("created-clipboard", "clipboard");
@@ -119,6 +118,7 @@ function append_new_section(section, id) {
   button.addEventListener("click", () => {
     history.pushState(null, null, "/"+button.dataset.section + "/")
     select_clipboard(null, container)
+
   })
  
   header.appendChild(button);
@@ -130,7 +130,6 @@ function append_new_section(section, id) {
 function append_new_clipboard(data) {
   const container = document.createElement("div");
   container.classList.add("clipboard-container");
-  console.log(data)
   container.dataset.clipboard = data.id;
   const header = document.createElement("div");
   header.className = "header";
@@ -195,8 +194,9 @@ function get_section_clipboards(event) {
 
 
 function delete_clipboard(clipboard) {
+  let section = window.localStorage.href.split("/")[3];
   const clipboard_id = clipboard.dataset.clipboard;
-  fetch(`/${clipboard_id}/delete`, {
+  fetch(`/${section}/${clipboard_id}/delete`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",

@@ -16,9 +16,9 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log(data.section);
-            add_clipboards("section-clipboard", data.clipboards);
+            add_clipboards(data.clipboards);
             history.pushState(null, null, "/" + data.section + "/");
+
             const clipboards_container = document.getElementById(
               "clipboards-container"
             );
@@ -44,10 +44,11 @@ function getCookie(name) {
   return cookieValue;
 }
 
-function add_clipboards(parent, clipboards) {
+function add_clipboards(clipboards) {
   const clipboards_container = document.createElement("div");
   clipboards_container.id = "clipboards-container";
   for (let i = 0; i < clipboards.length; i++) {
+    
     let clipboard_container = document.createElement("div");
     clipboard_container.classList.add("clipboard-container");
     clipboard_container.dataset.clipboard = clipboards[i].id;
@@ -82,7 +83,8 @@ function add_clipboards(parent, clipboards) {
 
 function delete_clipboard(clipboard) {
   const clipboard_id = clipboard.dataset.clipboard;
-  fetch(`/${clipboard_id}/delete`, {
+  const section = window.location.href.split("/")[3];
+  fetch(`/${section}/${clipboard_id}/delete`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -99,13 +101,11 @@ function delete_clipboard(clipboard) {
 }
 
 function select_clipboard(clipboards_container, clipboard) {
-  console.log("xxxxxxxxxxxxxxxx");
   if (clipboards_container) {
     clipboards_container.remove();
   }
   let elements = document.querySelectorAll(".created-clipboard");
   elements.forEach(function (element) {
-    console.log(element)
     element.classList.remove("selected");
   });
 
