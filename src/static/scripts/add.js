@@ -104,17 +104,28 @@ function getCookie(name) {
 }
 
 function append_new_section(section, id) {
+  console.log(section, id)
   const parent = document.getElementById("sections-container");
   const container = document.createElement("div");
   container.classList.add("created-clipboard", "clipboard");
   container.addEventListener("click", get_section_clipboards, false);
-  container.innerHTML = `
-  <div class="header">
-      <button data-section="${id}">${section}</button>
-    </div>
-  `;
+ 
+  const header = document.createElement("div");
+  header.classList.add("header");
+ 
+  const button = document.createElement("button");
+  button.setAttribute("data-section", id);
+  button.textContent = section;
+  button.addEventListener("click", () => {
+    history.pushState(null, null, "/"+button.dataset.section + "/")
+    select_clipboard(null, container)
+  })
+ 
+  header.appendChild(button);
+  container.appendChild(header);
   parent.appendChild(container);
-}
+ }
+ 
 
 function append_new_clipboard(data) {
   const container = document.createElement("div");

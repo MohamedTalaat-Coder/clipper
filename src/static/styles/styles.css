@@ -125,9 +125,15 @@ border-radius: 10px;
 
 }
 
-.add-current-clipboard-container {
-  width: 100%;
-  text-align: center;
+.section-button {
+  width: 47%;
+  border-radius: 10px;
+  border: none;
+  background-color: var(--blue-color);
+  color: var(--body-color);
+  padding: 9px;
+  cursor: pointer;
+  
 }
 
 .add-current-clipboard {
@@ -172,4 +178,9 @@ pre {
 
 .clipboard-actions button:first-child {
   margin-left: 10px;
+}
+
+.add-current-clipboard-container {
+  display: flex;
+  justify-content: space-between;
 }

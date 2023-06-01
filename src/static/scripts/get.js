@@ -1,10 +1,10 @@
-
 document.addEventListener("DOMContentLoaded", function () {
   let csrftoken = getCookie("csrftoken");
   const section_div = document.querySelectorAll(".created-clipboard");
   section_div.forEach((clipboard) => {
     clipboard.addEventListener("click", (event) => {
       const section = event.target.dataset.section;
+      console;
       fetch(`/${section}/`, {
         method: "POST",
         headers: {
@@ -16,25 +16,18 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
+            console.log(data.section);
             add_clipboards("section-clipboard", data.clipboards);
-            history.pushState(null, null, "/" + section + "/");
+            history.pushState(null, null, "/" + data.section + "/");
             const clipboards_container = document.getElementById(
               "clipboards-container"
             );
-            if (clipboards_container) {
-              clipboards_container.remove();
-            }
-            let clipboards = document.querySelectorAll(".created-clipboard");
-            clipboards.forEach(clip_div => {
-              clip_div.classList.remove("selected")
-            })
-            clipboard.classList.add("selected")
+            select_clipboard(clipboards_container, clipboard)
           }
         });
     });
   });
 });
-
 
 function getCookie(name) {
   let cookieValue = null;
@@ -57,7 +50,7 @@ function add_clipboards(parent, clipboards) {
   for (let i = 0; i < clipboards.length; i++) {
     let clipboard_container = document.createElement("div");
     clipboard_container.classList.add("clipboard-container");
-    clipboard_container.dataset.clipboard = clipboards[i].id
+    clipboard_container.dataset.clipboard = clipboards[i].id;
     let header = document.createElement("div");
     header.classList.add("header");
     header.textContent = clipboards[i].key;
@@ -69,9 +62,9 @@ function add_clipboards(parent, clipboards) {
     const delete_button = document.createElement("button");
     delete_button.textContent = "Delete";
     delete_button.classList.add("delete-button");
-    delete_button.addEventListener("click", function() {
-      delete_clipboard(clipboard_container)
-    })
+    delete_button.addEventListener("click", function () {
+      delete_clipboard(clipboard_container);
+    });
     const copy_button = document.createElement("button");
     copy_button.textContent = "Copy";
     copy_button.classList.add("copy-button");
@@ -82,9 +75,10 @@ function add_clipboards(parent, clipboards) {
     clipboards_container.appendChild(clipboard_container);
     clipboard_container.appendChild(clipboard_actions);
   }
-  document.getElementById("section-clipboard").appendChild(clipboards_container);
+  document
+    .getElementById("section-clipboard")
+    .appendChild(clipboards_container);
 }
-
 
 function delete_clipboard(clipboard) {
   const clipboard_id = clipboard.dataset.clipboard;
@@ -102,4 +96,18 @@ function delete_clipboard(clipboard) {
         clipboard.remove();
       }
     });
+}
+
+function select_clipboard(clipboards_container, clipboard) {
+  console.log("xxxxxxxxxxxxxxxx");
+  if (clipboards_container) {
+    clipboards_container.remove();
+  }
+  let elements = document.querySelectorAll(".created-clipboard");
+  elements.forEach(function (element) {
+    console.log(element)
+    element.classList.remove("selected");
+  });
+
+  clipboard.classList.add("selected");
 }

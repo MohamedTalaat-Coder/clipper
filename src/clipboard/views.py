@@ -30,8 +30,12 @@ class SectionClipboard(ListView):
         queryset = self.get_queryset()
         sections = queryset['sections']
         clipboards = queryset['clipboards']
-        return JsonResponse({"success": True, "clipboards": list(clipboards.values()), "sections": list(
-            sections.values())})
+        return JsonResponse({
+            "success": True,
+            "clipboards": list(clipboards.values()),
+            "sections": list(sections.values()),
+            "section": kwargs['id'],
+        })
 
     def get_queryset(self):
         section = self.kwargs['id']
@@ -87,5 +91,17 @@ class DeleteClipboard(DeleteView):
         return JsonResponse({"success":True})
 
     def get_object(self, queryset=None):
-        print("delete request recived")
-        return Clipboard.objects.get(id=self.kwargs['id'])
+        return Clipboard.objects.get(id=self.kwargs['clipboard'])
+
+class DeleteSection(DeleteView):
+    model = Section
+
+    def get_object(self):
+        section_id = self.kwargs.get("section")
+        print("wwe", section_id)
+        return Section.objects.get(id=section_id)
+
+    def delete(self, request, *args, **kwargs):
+        self.get_object().delete()
+        return JsonResponse({"success": True})
+

@@ -1,10 +1,33 @@
 document.addEventListener("DOMContentLoaded", function () {
   const delete_buttons = document.querySelectorAll(".delete-button");
+  const delete_section = document.getElementById("delete-section");
   console.log(delete_buttons);
   delete_buttons.forEach((button) => {
     button.addEventListener("click", (event) => {
       delete_clipboard(button);
     });
+  });
+  delete_section.addEventListener("click", () => {
+    const urlParts = window.location.href.split("/")[3];
+    fetch(`/${urlParts}/delete`, {
+      method: "DELETE",
+      headers: {
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          const sectionElement = document.querySelector(`[data-section='${urlParts}']`);
+          sectionElement.remove();
+
+          const clipboardContainers = document.getElementsByClassName("clipboard-container");
+          while (clipboardContainers.length > 0) {
+            clipboardContainers[0].remove();
+          }
+          
+        }
+      });
   });
 });
 
@@ -26,7 +49,8 @@ function getCookie(name) {
 function delete_clipboard(button) {
   const clipboard = button.parentElement.parentElement;
   const clipboard_id = clipboard.dataset.clipboard;
-  fetch(`/${clipboard_id}/delete`, {
+    const section = window.location.href.split("/")[3];
+  fetch(`/${section}/${clipboard_id}/delete`, {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
@@ -41,4 +65,3 @@ function delete_clipboard(button) {
       }
     });
 }
-
