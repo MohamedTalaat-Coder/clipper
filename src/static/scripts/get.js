@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   addSelectedClassToMatchingSection();
   document.body.addEventListener("click", (event) => {
     if (event.target.matches(".section-button")) {
-      document.querySelectorAll(".created-clipboard").forEach((div) =>
-        div.classList.remove("selected")
-      );
+      document
+        .querySelectorAll(".created-clipboard")
+        .forEach((div) => div.classList.remove("selected"));
       event.target.parentElement.parentElement.classList.add("selected");
       const section = event.target.dataset.section;
       fetch(`/${section}/`, {
@@ -20,19 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
           if (data.success) {
             remove_current_clipboards();
             if (data.clipboards.length > 0) {
+              console.log("wwwqq")
               add_clipboards(data.clipboards);
             }
             history.pushState(null, null, "/" + data.section + "/");
-
-            const clipboards_container = document.getElementById(
-              "clipboards-container"
-            );
           }
         });
     }
   });
 });
-
 
 function getCookie(name) {
   let cookieValue = null;
@@ -50,6 +46,7 @@ function getCookie(name) {
 }
 
 function add_clipboards(clipboards) {
+  console.log("here")
   const clipboards_container = document.createElement("div");
   clipboards_container.id = "clipboards-container";
   for (let i = 0; i < clipboards.length; i++) {
@@ -118,6 +115,7 @@ function select_clipboard(clipboards_container, clipboard) {
 
 function remove_current_clipboards() {
   document.querySelectorAll(".clipboard-container").forEach((clipboard) => {
+    console.log(clipboard)
     clipboard.remove();
   });
 }
@@ -129,12 +127,12 @@ function addSelectedClassToMatchingSection() {
   let currentPath = window.location.href.split("/")[3];
 
   // Find the matching section_div element
-  let matchingDiv = [...section_div].find(div => div.querySelector(`[data-section="${currentPath}"]`));
+  let matchingDiv = [...section_div].find((div) =>
+    div.querySelector(`[data-section="${currentPath}"]`)
+  );
 
   // Add 'selected' class to the matching section_div element
   if (matchingDiv) {
-    matchingDiv.classList.add('selected');
+    matchingDiv.classList.add("selected");
   }
 }
-
-

@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((data) => {
               if (data.success) {
-                alert("xxx")
                 append_new_clipboard(data);
               } else {
                 alert("No data in clipboard");

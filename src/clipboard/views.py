@@ -79,6 +79,7 @@ class AddToSection(CreateView):
         data = json.loads(request.body)
         if not data['value'] or not data['key']:
             return JsonResponse({"success": False})
+        print(data['section'])
         section = Section.objects.get(id=data['section'])
         clipboard = Clipboard.objects.create(section=section, key=data['key'], value=data['value'])
         return JsonResponse({"success": True, "key": data['key'], "value": data['value'], "id": clipboard.id})
