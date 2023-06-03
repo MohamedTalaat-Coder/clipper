@@ -78,21 +78,23 @@ class AddToSection(CreateView):
     def post(self, request, *args, **kwargs):
         data = json.loads(request.body)
         if not data['value'] or not data['key']:
-            return JsonResponse({"success":False})
+            return JsonResponse({"success": False})
         section = Section.objects.get(id=data['section'])
         clipboard = Clipboard.objects.create(section=section, key=data['key'], value=data['value'])
-        return JsonResponse({"success": True, "key": data['key'], "value": data['value'], "id":clipboard.id})
+        return JsonResponse({"success": True, "key": data['key'], "value": data['value'], "id": clipboard.id})
+
 
 class DeleteClipboard(DeleteView):
     model = Clipboard
 
     def delete(self, request, *args, **kwargs):
         self.get_object().delete()
-        return JsonResponse({"success":True})
+        return JsonResponse({"success": True})
 
     def get_object(self, queryset=None):
         print("-->", self.kwargs['clipboard'])
         return Clipboard.objects.get(id=self.kwargs['clipboard'])
+
 
 class DeleteSection(DeleteView):
     model = Section
@@ -103,7 +105,5 @@ class DeleteSection(DeleteView):
         return Section.objects.get(id=section_id)
 
     def delete(self, request, *args, **kwargs):
-
         self.get_object().delete()
         return JsonResponse({"success": True})
-

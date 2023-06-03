@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
   addSelectedClassToMatchingSection();
-  const section_div = document.querySelectorAll(".created-clipboard");
-  section_div.forEach((clipboard) => {
-    clipboard.addEventListener("click", (event) => {
-      section_div.forEach(div => div.classList.remove('selected'));
-      clipboard.classList.add('selected');
+  document.body.addEventListener("click", (event) => {
+    if (event.target.matches(".section-button")) {
+      document.querySelectorAll(".created-clipboard").forEach((div) =>
+        div.classList.remove("selected")
+      );
+      event.target.parentElement.parentElement.classList.add("selected");
       const section = event.target.dataset.section;
       fetch(`/${section}/`, {
         method: "POST",
@@ -28,9 +29,10 @@ document.addEventListener("DOMContentLoaded", function () {
             );
           }
         });
-    });
+    }
   });
 });
+
 
 function getCookie(name) {
   let cookieValue = null;

@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
           while (clipboardContainers.length > 0) {
             clipboardContainers[0].remove();
           }
+
+          window.history.replaceState({}, document.title, "/")
         }
       });
   });
