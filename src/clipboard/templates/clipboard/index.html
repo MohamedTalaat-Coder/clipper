@@ -11,15 +11,10 @@
     </div>
     <div></div>
   </div>
-  <div class="default-clipboard clipboard">
-    <div class="header">
-      <button>Clipboard</button>
-    </div>
-  </div>
   {% for section in sections %}
   <div class="created-clipboard clipboard">
     <div class="header">
-      <button data-section="{{section.id}}">{{section.section}}</button>
+      <button data-section="{{section.id}}" class="section-button">{{section.section}}</button>
     </div>
   </div>
   {% endfor %}

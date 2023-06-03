@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  add_button.forEach((button) => {
-    button.addEventListener("click", () => {
-      const url = `${button.dataset.section}/add/`;
-    });
-  });
+  // add_button.forEach((button) => {
+  //   button.addEventListener("click", () => {
+  //     const url = `${button.dataset.section}/add/`;
+  //   });
+  // });
 
   add_current_clipboard_button.addEventListener("click", () => {
     navigator.clipboard
@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((response) => response.json())
             .then((data) => {
               if (data.success) {
+                alert("xxx")
                 append_new_clipboard(data);
               } else {
                 alert("No data in clipboard");
@@ -187,7 +188,9 @@ function get_section_clipboards(event) {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
+        if (data.clipboards.length > 0) {
         append_new_clipboard(data);
+        }
       }
     });
 }

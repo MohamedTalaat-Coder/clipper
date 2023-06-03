@@ -1,10 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let csrftoken = getCookie("csrftoken");
+  addSelectedClassToMatchingSection();
   const section_div = document.querySelectorAll(".created-clipboard");
   section_div.forEach((clipboard) => {
     clipboard.addEventListener("click", (event) => {
+      section_div.forEach(div => div.classList.remove('selected'));
+      clipboard.classList.add('selected');
       const section = event.target.dataset.section;
-      console;
       fetch(`/${section}/`, {
         method: "POST",
         headers: {
@@ -16,13 +17,15 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            add_clipboards(data.clipboards);
+            remove_current_clipboards();
+            if (data.clipboards.length > 0) {
+              add_clipboards(data.clipboards);
+            }
             history.pushState(null, null, "/" + data.section + "/");
 
             const clipboards_container = document.getElementById(
               "clipboards-container"
             );
-            select_clipboard(clipboards_container, clipboard)
           }
         });
     });
@@ -48,7 +51,6 @@ function add_clipboards(clipboards) {
   const clipboards_container = document.createElement("div");
   clipboards_container.id = "clipboards-container";
   for (let i = 0; i < clipboards.length; i++) {
-    
     let clipboard_container = document.createElement("div");
     clipboard_container.classList.add("clipboard-container");
     clipboard_container.dataset.clipboard = clipboards[i].id;
@@ -111,3 +113,26 @@ function select_clipboard(clipboards_container, clipboard) {
 
   clipboard.classList.add("selected");
 }
+
+function remove_current_clipboards() {
+  document.querySelectorAll(".clipboard-container").forEach((clipboard) => {
+    clipboard.remove();
+  });
+}
+
+function addSelectedClassToMatchingSection() {
+  const section_div = document.querySelectorAll(".created-clipboard");
+
+  // Get the current URL path
+  let currentPath = window.location.href.split("/")[3];
+
+  // Find the matching section_div element
+  let matchingDiv = [...section_div].find(div => div.querySelector(`[data-section="${currentPath}"]`));
+
+  // Add 'selected' class to the matching section_div element
+  if (matchingDiv) {
+    matchingDiv.classList.add('selected');
+  }
+}
+
+
