@@ -27,6 +27,23 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
     }
+    if (event.target.matches(".copy-button")) {
+      const copyToClipboard = () => {
+          let clipboard_body = event.target.parentElement.parentElement.children[1].textContent;
+          navigator.clipboard.writeText(clipboard_body);
+          let popup = document.createElement("div");
+          popup.textContent = "Copied";
+          popup.classList.add("copied-popup");
+          document.body.appendChild(popup);
+          setTimeout(() => {
+              popup.remove();
+          }, 1000);
+      }
+      copyToClipboard();
+  }
+  
+  
+  
   });
 });
 

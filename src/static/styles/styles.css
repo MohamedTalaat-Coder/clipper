@@ -184,3 +184,16 @@ pre {
   display: flex;
   justify-content: space-between;
 }
+
+.copied-popup {
+  position: fixed;
+  top: 30px;
+  left: 60%;
+  transform: translateX(-50%);
+  width: 25%;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: center;
+  background-color: var(--crimson);
+  color: var(--body-color);
+}
